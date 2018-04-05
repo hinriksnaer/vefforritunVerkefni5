@@ -1,1 +1,7 @@
-/* útfæra */
+.statTable *:first-child:not(thead) td:first-child {
+    font-weight: bold;
+  }
+
+.statTable td {
+    padding: 6px;
+}

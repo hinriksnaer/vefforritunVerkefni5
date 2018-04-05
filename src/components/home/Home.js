@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 
 import './Home.css';
@@ -53,27 +52,27 @@ export default class Home extends Component {
       const { min, max, numTests, numStudents, averageStudents }  = data.stats;
       return (
         <div>
-        <h1>Tölfræði</h1>
-        <table>
+        <h2>Tölfræði</h2>
+        <table className="statTable">
           <tbody>
           <tr>
-            <td>Fjöldi prófa</td>
+            <td>Fjöldi prófa:</td>
             <td>{numTests}</td>
           </tr>
           <tr>
-            <td>Fjöldi nemenda í öllum prófum</td>
+            <td>Fjöldi nemenda í öllum prófum:</td>
             <td>{numStudents}</td>
           </tr>
           <tr>
-            <td>Meðalfjöldi nemenda í prófi</td>
+            <td>Meðalfjöldi nemenda í prófi:</td>
             <td>{averageStudents}</td>
           </tr>
           <tr>
-            <td>Minnsti fjöldi nemenda í prófi</td>
+            <td>Minnsti fjöldi nemenda í prófi:</td>
             <td>{min}</td>
           </tr>
           <tr>
-            <td>Hæsti fjöldi nemenda í prófi</td>
+            <td>Hæsti fjöldi nemenda í prófi:</td>
             <td>{max}</td>
           </tr>
           </tbody>

@@ -1,1 +1,6 @@
-/* útfæra */
+.schools li {
+    padding: 1.5em 0em;
+    border-bottom-style: solid;
+    border-color: black;
+    border-width: 1px;
+} 

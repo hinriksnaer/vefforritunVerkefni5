@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
-import { Route, Link, Switch, NavLink } from 'react-router-dom'
+import { Route, NavLink } from 'react-router-dom';
+import Department from '../department';
+import NotFound from '../not-found';
 
 import './School.css';
 
@@ -12,19 +13,40 @@ import './School.css';
  */
 
 export default class School extends Component {
-  state = { data: null, loading: true, error: false }
+  state = { data: null, loading: true, error: false, activeDep: null }
 
   async componentDidMount() {
     try {
       const slug = this.props.location.pathname;
-      console.log(slug);
       const data = await this.fetchData(`https://vefforritun2-2018-v4-synilausn.herokuapp.com${slug}`);
+      if (data.error) {
+        this.setState({ error: true});
+      }
       this.setState({ data, loading: false });
     } catch (e) {
       console.error('Error fetching navigation', e);
       this.setState({ error: true, loading: false });
     }
   }
+  
+async componentWillReceiveProps(nextProp) {
+  try {
+    const slug = nextProp.location.pathname;
+    const data = await this.fetchData(`https://vefforritun2-2018-v4-synilausn.herokuapp.com${slug}`);
+    this.setState({ data, loading: false });
+  } catch (e) {
+    console.error('Error fetching navigation', e);
+    this.setState({ error: true, loading: false });
+  }
+}
+
+headingClick = (heading) => {
+  if (this.state.activeDep === heading){
+    this.setState({activeDep: null})
+  } else {
+    this.setState({ activeDep: heading });
+  }
+}
 
   async fetchData(url) {
     const response = await fetch(url);
@@ -47,24 +69,22 @@ export default class School extends Component {
     if (error) {
       return (
         <div>
-          <p>Villa við að sækja gögn</p>
-          <Helmet title="Villa við að sækja gögn">
-          </Helmet>
+          <Route component ={NotFound}/>
         </div>
       );
     }
-    console.log(data.school.departments);
     return (
       <section className="school">
-        {data.school.departments.map((department) => {
-      return (
-        <li key={department.heading}>
-          <Link to={`${department.heading}`}>{department.heading}</Link>
-        </li>
-      )
-  })}
+      <h2>{data.school.heading}</h2>
+        <ul className="schools">
+          {data.school.departments.map(department => 
+            <li key={department.heading}>
+              <Department data={department} headingClick={() => this.headingClick(department.heading)} visibleDep={this.state.activeDep} />
+            </li>
+          )}
+        </ul>
+        <NavLink to={`/`}>{'Heim'}</NavLink>
       </section>
     );
   }
 }
-

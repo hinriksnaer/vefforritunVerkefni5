@@ -1,1 +1,13 @@
-/* útfæra */
+.schoolSelector:hover {
+    cursor: pointer;
+}
+
+.testTable tr:nth-child(even){background-color: #f2f2f2;}
+
+.testTable td {
+    padding: 8px;
+}
+
+.testTable thead {
+    font-size:1.2em;
+}

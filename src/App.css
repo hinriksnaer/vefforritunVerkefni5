@@ -4,5 +4,7 @@
   margin: 0 auto;
   padding: 10px;
 }
-
+ul{ 
+  list-style-type: none;
+}
 /* útfæra */

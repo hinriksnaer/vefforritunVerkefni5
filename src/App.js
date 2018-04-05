@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Helmet from 'react-helmet';
-import { Route, Link, Switch, NavLink } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 
 import './App.css';
 
@@ -9,7 +9,7 @@ import School from './components/school';
 import Navigation from './components/navigation';
 import NotFound from './components/not-found';
 
-class Data extends Component {
+class App extends Component {
   state = { data: null, loading: true, error: false }
 
   async componentDidMount() {
@@ -29,7 +29,7 @@ class Data extends Component {
   }
 
   render() {
-    const { data, loading, error } = this.state;
+    const { loading, error } = this.state;
     if (loading) {
       return (
         <div>
@@ -43,36 +43,29 @@ class Data extends Component {
     if (error) {
       return (
         <div>
-          <p>Villa við að sækja gögn</p>
-          <Helmet title="Villa við að sækja gögn">
-          </Helmet>
+          <Route component ={NotFound}/>
         </div>
       );
     }
-    
-  ;
-  }
-}
+  
+  
 
-class App extends Component {
-  render() {
+
     return (
-      <main>
-        <ul>
+      <div className = "app">
+        <h1>Próftöflur</h1>
+        <ul className = "navigation">
           <Navigation/>
         </ul>
-      <section>
       <Helmet defaultTitle="Próftöflur" titleTemplate="%s – Próftöflur">
         <html lang="is" />
         <body className="foo" />
       </Helmet>
       <Switch>
         <Route exact path="/" component={Home}/>
-        <Route exact path="/felagsvisindasvid" component={School}/>
-        <Route exact path="/heilbrigdisvisindasvid" component={School}/>
+        <Route exact path="/:school" component={School}/>
       </Switch>
-    </section>
-    </main>
+    </div>
     );
   }
 }
